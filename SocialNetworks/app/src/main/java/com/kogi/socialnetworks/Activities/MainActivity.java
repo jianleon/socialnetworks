@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.kogi.socialnetworks.R;
+import com.kogi.socialnetworks.Utils.BaseApplication;
 import com.kogi.socialnetworks.Utils.Helpers;
 
 public class MainActivity extends AppCompatActivity
@@ -31,7 +32,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
+        if (BaseApplication.INSTAGRAM_USER_LOGGUED)
+            Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
+        else
+            Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
     }
 
     @Override

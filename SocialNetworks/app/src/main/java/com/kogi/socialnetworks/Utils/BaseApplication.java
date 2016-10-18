@@ -7,4 +7,5 @@ package com.kogi.socialnetworks.Utils;
 public class BaseApplication {
 
     public static String INSTAGRAM_USER_TOKEN;
+    public static boolean INSTAGRAM_USER_LOGGUED = false;
 }

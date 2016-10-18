@@ -50,6 +50,7 @@ public class LoginFragment extends Fragment {
         @Override
         public void onSuccess(IGSession session) {
             BaseApplication.INSTAGRAM_USER_TOKEN = session.getAccessToken();
+            BaseApplication.INSTAGRAM_USER_LOGGUED = true;
             startActivity(new Intent(getActivity(), MainActivity.class));
             getActivity().finish();
         }

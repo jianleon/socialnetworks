@@ -4,9 +4,27 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/user_profile_photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
     <TextView
+        android:id="@+id/user_media_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="INSTAGRAM"/>
+        android:text="@string/template_instagram_media"/>
+
+    <TextView
+        android:id="@+id/user_followers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/template_instagram_followers"/>
+
+    <TextView
+        android:id="@+id/user_following"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/template_instagram_following"/>
 
 </LinearLayout>
