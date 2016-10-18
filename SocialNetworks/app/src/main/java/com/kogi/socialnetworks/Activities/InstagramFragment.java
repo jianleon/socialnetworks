@@ -1,21 +1,20 @@
-package com.kogi.socialnetworks;
+package com.kogi.socialnetworks.Activities;
 
-
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kogi.socialnetworks.R;
+
 /**
- * A simple {@link Fragment} subclass.
+ *  Fragmento que carga la funcionalidad de Instagram
  */
 public class InstagramFragment extends Fragment {
 
-
     public InstagramFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
