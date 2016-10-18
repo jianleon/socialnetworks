@@ -4,6 +4,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="label_sign_out">Cerrar sesión</string>
+
+    <string name="template_name">My name</string>
     <string name="template_instagram_media">- Media</string>
     <string name="template_instagram_followers">- Followers</string>
     <string name="template_instagram_following">- Following</string>

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.instagram.instagramapi.engine.InstagramEngine;
 import com.instagram.instagramapi.exceptions.InstagramException;
@@ -16,8 +15,11 @@ import com.instagram.instagramapi.interfaces.InstagramAPIResponseCallback;
 import com.instagram.instagramapi.objects.IGPagInfo;
 import com.instagram.instagramapi.objects.IGUser;
 import com.kogi.socialnetworks.R;
+import com.kogi.socialnetworks.Utils.Helpers;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  *  Fragmento que carga la funcionalidad de Instagram
@@ -25,6 +27,9 @@ import com.squareup.picasso.RequestCreator;
 public class InstagramFragment extends Fragment {
 
     ImageView imgProfilePhoto;
+
+    TextView txtSignOut;
+    TextView txtFullName;
     TextView txtMediaCount;
     TextView txtFollowersCount;
     TextView txtFollowingCount;
@@ -44,9 +49,19 @@ public class InstagramFragment extends Fragment {
         super.onStart();
 
         imgProfilePhoto = (ImageView) getActivity().findViewById(R.id.user_profile_photo);
+        txtSignOut = (TextView) getActivity().findViewById(R.id.sign_out);
+        txtFullName = (TextView) getActivity().findViewById(R.id.user_name);
         txtMediaCount = (TextView) getActivity().findViewById(R.id.user_media_count);
         txtFollowersCount = (TextView) getActivity().findViewById(R.id.user_followers);
         txtFollowingCount = (TextView) getActivity().findViewById(R.id.user_following);
+
+        txtSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InstagramEngine.getInstance(getActivity()).logout(getActivity(), RESULT_OK);
+                Helpers.replaceFragment(getActivity(), R.id.content_main, new LoginFragment());
+            }
+        });
     }
 
     InstagramAPIResponseCallback<IGUser> instagramUserResponseCallback = new InstagramAPIResponseCallback<IGUser>() {
@@ -73,10 +88,10 @@ public class InstagramFragment extends Fragment {
      * @param info  Objeto que contiene la información del usuario
      */
     private void loadGeneralInfo(IGUser info) {
-        Picasso picasso = Picasso.with(getActivity());
-        RequestCreator creator = picasso.load(info.getProfilePictureURL());
+        RequestCreator creator = Picasso.with(getActivity()).load(info.getProfilePictureURL());
         creator.into(imgProfilePhoto);
 
+        txtFullName.setText(info.getFullName());
         txtMediaCount.setText(String.format("%s Media", info.getMediaCount()));
         txtFollowersCount.setText(String.format("%s Followers", info.getFollowedByCount()));
         txtFollowingCount.setText(String.format("%s Following", info.getFollowsCount()));
