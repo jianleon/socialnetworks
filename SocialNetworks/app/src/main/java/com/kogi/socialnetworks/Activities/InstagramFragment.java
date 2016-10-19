@@ -36,6 +36,9 @@ public class InstagramFragment extends Fragment {
     public InstagramFragment() {
     }
 
+    /**
+     * Inicializa los componentes para autenticación de Instagram
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,6 +46,9 @@ public class InstagramFragment extends Fragment {
         return inflater.inflate(R.layout.instagram_fragment, container, false);
     }
 
+    /**
+     * Inicializador de componentes de la UI
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -69,6 +75,9 @@ public class InstagramFragment extends Fragment {
         }
     };
 
+    /**
+     * Callback encargado de traer los archivos multimedia de Instagram
+     */
     InstagramAPIResponseCallback<ArrayList<IGMedia>> instagramMediaResponseCallback = new InstagramAPIResponseCallback<ArrayList<IGMedia>>() {
         @Override
         public void onResponse(ArrayList<IGMedia> responseObject, IGPagInfo pageInfo) {

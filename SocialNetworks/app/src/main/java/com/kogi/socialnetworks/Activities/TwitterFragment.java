@@ -25,7 +25,7 @@ import java.util.List;
 import retrofit2.Call;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment con la vista de los tweets de un usuario
  */
 public class TwitterFragment extends Fragment {
 
@@ -40,6 +40,9 @@ public class TwitterFragment extends Fragment {
         return inflater.inflate(R.layout.twitter_fragment, container, false);
     }
 
+    /**
+     * Carga la lista de tweets del usuario autenticado
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -47,7 +50,7 @@ public class TwitterFragment extends Fragment {
 
         TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient();
         StatusesService statusesService = twitterApiClient.getStatusesService();
-        Call<List<Tweet>> call = statusesService.userTimeline(Configuration.user_id, null, null, null, null, false, false, false, false);
+        Call<List<Tweet>> call = statusesService.userTimeline(Configuration.twitter_user_id, null, null, null, null, false, false, false, false);
         call.enqueue(new Callback<List<Tweet>>() {
             @Override
             public void success(Result<List<Tweet>> result) {

@@ -1,7 +1,6 @@
 package com.kogi.socialnetworks.Activities;
 
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -27,6 +25,9 @@ public class MainActivity extends AppCompatActivity
     MenuItem logoutInstagram;
     MenuItem logoutTwitter;
 
+    /**
+     * Inicializador de componentes de la UI
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +43,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Log.e("TAG", "" + R.id.nav_logout_instagram);
-        Log.e("TAG", "" + R.id.nav_logout_twitter);
 
         logoutInstagram = navigationView.getMenu().findItem(R.id.nav_logout_instagram);
         logoutTwitter= navigationView.getMenu().findItem(R.id.nav_logout_twitter);
@@ -63,6 +61,10 @@ public class MainActivity extends AppCompatActivity
             Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
     }
 
+    /**
+     * Funcionalidad del botón 'Back'. Cuando el Drawer está abierto, lo cierra.
+     * De lo contrario, hace la funcionalidad del sistema por defecto.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Cambio de Fragments desde el NavView
+     * Cambio de Fragments desde el NavView y cerrado de sesiones
      */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -96,6 +98,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Cerrado de sesión de Twitter
+     */
     private void logoutTwitter() {
         if (Helpers.getBooleanPreference(this, "TWITTER_IS_LOGGED")) {
             CookieSyncManager.createInstance(this);
@@ -109,6 +114,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Cerrado de sesión de Instagram
+     */
     private void logoutInstagram() {
         if (Helpers.getBooleanPreference(this, "INSTAGRAM_IS_LOGGED")) {
             InstagramEngine.getInstance(this).logout(this, RESULT_OK);
@@ -118,10 +126,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Obtiene la respuesta de la autenticación de twitter e inicia los componentes
+     * de la sesión
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        TwitterLoginButton loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        TwitterLoginButton twitterLoginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         super.onActivityResult(requestCode, resultCode, data);
-        loginButton.onActivityResult(requestCode, resultCode, data);
+        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
 }

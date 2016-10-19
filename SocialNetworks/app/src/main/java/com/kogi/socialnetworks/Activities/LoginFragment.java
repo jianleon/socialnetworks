@@ -33,11 +33,12 @@ import io.fabric.sdk.android.Fabric;
  */
 public class LoginFragment extends Fragment {
 
-    TwitterLoginButton loginButton;
-
     public LoginFragment() {
     }
 
+    /**
+     * Inicializador de los servicios de Fabric para Twitter
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,12 +61,12 @@ public class LoginFragment extends Fragment {
         instagramLoginButton.setInstagramLoginCallback(instagramLoginCallbackListener);
         instagramLoginButton.setScopes(scopes);
 
-        loginButton = (TwitterLoginButton) getActivity().findViewById(R.id.twitter_login_button);
+        TwitterLoginButton loginButton = (TwitterLoginButton) getActivity().findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 Log.e("SOME", result.data.getUserId() + "<--");
-                Configuration.user_id = result.data.getUserId();
+                Configuration.twitter_user_id = result.data.getUserId();
                 Helpers.setStringPreference(getActivity(), "TWITTER_TOKEN", result.data.getAuthToken().secret);
                 Helpers.setBooleanPreference(getActivity(), "TWITTER_IS_LOGGED", true);
                 com.kogi.socialnetworks.Utils.Configuration.loadView = "twitter";

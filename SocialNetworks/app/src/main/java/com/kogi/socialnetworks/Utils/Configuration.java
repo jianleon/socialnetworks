@@ -5,8 +5,10 @@ package com.kogi.socialnetworks.Utils;
  */
 
 public class Configuration {
+
     public static String loadView = "instagram";
+
     public static final String TWITTER_KEY = "fXe90GGdMbmYnAhsaC0DwrlQV";
     public static final String TWITTER_SECRET = "OcUp6fd3B2aaFOH3rufIdNPPxOi4su6fykeI1JPwZSbZ8DDTyg";
-    public static long user_id;
+    public static long twitter_user_id;
 }
