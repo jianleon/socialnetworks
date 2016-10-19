@@ -1,5 +1,6 @@
 package com.kogi.socialnetworks.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.kogi.socialnetworks.R;
+import com.kogi.socialnetworks.Utils.Configuration;
 import com.kogi.socialnetworks.Utils.Helpers;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,9 +34,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGUED"))
-            Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
-        else
+        if (Configuration.loadView.equals("instagram")) {
+            if (Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGUED"))
+                Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
+        } else if (Configuration.loadView.equals("twitter")) {
+            if (Helpers.getBooleanPreference(getApplicationContext(),"TWITTER_IS_LOGUED"))
+                Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
+        } else
             Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
     }
 
@@ -63,5 +70,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        TwitterLoginButton loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        super.onActivityResult(requestCode, resultCode, data);
+        loginButton.onActivityResult(requestCode, resultCode, data);
     }
 }

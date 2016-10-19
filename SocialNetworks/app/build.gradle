@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -19,6 +23,16 @@ android {
     }
 }
 
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -29,5 +43,8 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.github.sayyam:instagramapi:0.0.6'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile('com.twitter.sdk.android:twitter:2.1.1@aar') {
+        transitive = true;
+    }
     testCompile 'junit:junit:4.12'
 }

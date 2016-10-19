@@ -16,7 +16,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -28,6 +27,10 @@
         <meta-data
             android:name="com.instagram.instagramapi.InstagramAppRedirectURL"
             android:value="http://www.kogimobile.com/android/socialfeed/redirect" />
+
+        <meta-data
+        android:name="io.fabric.ApiKey"
+        android:value="36f1679b3cd7c2a620c089ff2c9faed77a07bf12"/>
 
     </application>
 
