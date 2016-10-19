@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">SocialNetworks</string>
+    <string name="app_name">Social Networks</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="label_sign_out">Cerrar sesión</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="template_name">My name</string>
+    <string name="template_instagram_media">- Media</string>
+    <string name="template_instagram_followers">- Followers</string>
+    <string name="template_instagram_following">- Following</string>
+
 </resources>

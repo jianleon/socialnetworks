@@ -1,15 +1,16 @@
-package com.kogi.socialnetworks;
+package com.kogi.socialnetworks.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.kogi.socialnetworks.R;
+import com.kogi.socialnetworks.Utils.Helpers;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +30,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGUED"))
+            Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
+        else
+            Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
     }
 
     @Override
@@ -41,19 +47,18 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Cambio de Fragments desde el NavView
+     */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (id == R.id.nav_share) {
-            fragmentTransaction.replace(R.id.content_main, new TwitterFragment());
-        } else if (id == R.id.nav_send) {
-            fragmentTransaction.replace(R.id.content_main, new InstagramFragment());
+        if (id == R.id.nav_twitter) {
+            Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
+        } else if (id == R.id.nav_instagram) {
+            Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
         }
-
-        fragmentTransaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
