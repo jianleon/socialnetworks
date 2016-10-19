@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Social Networks</string>
+    <string name="company">Kogi Mobile</string>
+    <string name="description">Technical test</string>
+
+    <string name="label_start">Comenzar</string>
+    <string name="label_twitter">Twitter</string>
+    <string name="label_instagram">Instagram</string>
+    <string name="label_pick_one">Pick one&#8230;</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_login_instagram">Inicia sesión en Instagram</string>
+    <string name="label_logout_twitter">Cerrar sesión en Twitter</string>
+    <string name="label_logout_instagram">Cerrar sesión en Instagram</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="template_name">Loading name</string>
+    <string name="template_instagram_media">Loading Media</string>
+    <string name="template_instagram_followers">Loading Followers</string>
+    <string name="template_instagram_following">Loading Following</string>
+
+</resources>
