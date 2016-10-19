@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Pick one...">
+    <item android:title="@string/label_pick_one">
         <menu>
             <item
                 android:id="@+id/nav_twitter"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Twitter"/>
+                android:title="@string/label_twitter"/>
             <item
                 android:id="@+id/nav_instagram"
                 android:icon="@drawable/ic_camera_alt_black_24dp"
-                android:title="Instagram"/>
+                android:title="@string/label_instagram"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/label_settings">
+        <menu>
+            <item
+                android:id="@+id/nav_logout_twitter"
+                android:icon="@drawable/ic_exit"
+                android:title="@string/label_logout_twitter"/>
+            <item
+                android:id="@+id/nav_logout_instagram"
+                android:icon="@drawable/ic_exit"
+                android:title="@string/label_logout_instagram"/>
         </menu>
     </item>
 

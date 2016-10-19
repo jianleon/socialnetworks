@@ -67,7 +67,7 @@ public class LoginFragment extends Fragment {
                 Log.e("SOME", result.data.getUserId() + "<--");
                 Configuration.user_id = result.data.getUserId();
                 Helpers.setStringPreference(getActivity(), "TWITTER_TOKEN", result.data.getAuthToken().secret);
-                Helpers.setBooleanPreference(getActivity(), "TWITTER_IS_LOGUED", true);
+                Helpers.setBooleanPreference(getActivity(), "TWITTER_IS_LOGGED", true);
                 com.kogi.socialnetworks.Utils.Configuration.loadView = "twitter";
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
@@ -86,7 +86,7 @@ public class LoginFragment extends Fragment {
     InstagramLoginCallbackListener instagramLoginCallbackListener = new InstagramLoginCallbackListener() {
         @Override
         public void onSuccess(IGSession session) {
-            Helpers.setBooleanPreference(getActivity(), "INSTAGRAM_IS_LOGUED", true);
+            Helpers.setBooleanPreference(getActivity(), "INSTAGRAM_IS_LOGGED", true);
             Helpers.setStringPreference(getActivity(), "INSTAGRAM_ACCESS_TOKEN", session.getAccessToken());
             com.kogi.socialnetworks.Utils.Configuration.loadView = "instagram";
             startActivity(new Intent(getActivity(), MainActivity.class));

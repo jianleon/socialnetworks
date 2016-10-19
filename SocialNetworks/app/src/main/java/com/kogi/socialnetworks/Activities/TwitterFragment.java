@@ -2,7 +2,6 @@ package com.kogi.socialnetworks.Activities;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,7 @@ import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.services.StatusesService;
 import com.twitter.sdk.android.tweetui.CompactTweetView;
-import com.twitter.sdk.android.tweetui.TweetUtils;
 
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;

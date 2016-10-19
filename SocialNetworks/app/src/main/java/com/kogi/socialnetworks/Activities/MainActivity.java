@@ -1,6 +1,7 @@
 package com.kogi.socialnetworks.Activities;
 
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,15 +9,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
+import com.instagram.instagramapi.engine.InstagramEngine;
 import com.kogi.socialnetworks.R;
 import com.kogi.socialnetworks.Utils.Configuration;
 import com.kogi.socialnetworks.Utils.Helpers;
+import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    MenuItem logoutInstagram;
+    MenuItem logoutTwitter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +43,21 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (Configuration.loadView.equals("instagram") && Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGUED")) {
+        Log.e("TAG", "" + R.id.nav_logout_instagram);
+        Log.e("TAG", "" + R.id.nav_logout_twitter);
+
+        logoutInstagram = navigationView.getMenu().findItem(R.id.nav_logout_instagram);
+        logoutTwitter= navigationView.getMenu().findItem(R.id.nav_logout_twitter);
+
+        if (!Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGGED"))
+            logoutInstagram.setVisible(false);
+
+        if (!Helpers.getBooleanPreference(getApplicationContext(),"TWITTER_IS_LOGGED"))
+            logoutTwitter.setVisible(false);
+
+        if (Configuration.loadView.equals("instagram") && Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGGED")) {
             Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
-        } else if (Configuration.loadView.equals("twitter") && Helpers.getBooleanPreference(getApplicationContext(),"TWITTER_IS_LOGUED")) {
+        } else if (Configuration.loadView.equals("twitter") && Helpers.getBooleanPreference(getApplicationContext(),"TWITTER_IS_LOGGED")) {
             Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
         } else
             Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
@@ -59,21 +80,42 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_twitter) {
-            if (Helpers.getBooleanPreference(getApplicationContext(), "TWITTER_IS_LOGUED"))
-                Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
-            else
-                Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
-        } else if (id == R.id.nav_instagram) {
-            if (Helpers.getBooleanPreference(getApplicationContext(), "INSTAGRAM_IS_LOGUED"))
-                Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
-            else
-                Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
-        }
+        if (id == R.id.nav_twitter && Helpers.getBooleanPreference(getApplicationContext(), "TWITTER_IS_LOGGED")) {
+            Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
+        } else if (id == R.id.nav_instagram && Helpers.getBooleanPreference(getApplicationContext(), "INSTAGRAM_IS_LOGGED")) {
+            Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
+        } else if (id == R.id.nav_logout_twitter) {
+            logoutTwitter();
+        } else if (id == R.id.nav_logout_instagram) {
+            logoutInstagram();
+        } else
+            Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logoutTwitter() {
+        if (Helpers.getBooleanPreference(this, "TWITTER_IS_LOGGED")) {
+            CookieSyncManager.createInstance(this);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeSessionCookie();
+            Twitter.getSessionManager().clearActiveSession();
+            Twitter.logOut();
+            Helpers.setBooleanPreference(this, "TWITTER_IS_LOGGED", false);
+            Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
+            logoutTwitter.setVisible(false);
+        }
+    }
+
+    private void logoutInstagram() {
+        if (Helpers.getBooleanPreference(this, "INSTAGRAM_IS_LOGGED")) {
+            InstagramEngine.getInstance(this).logout(this, RESULT_OK);
+            Helpers.setBooleanPreference(this, "INSTAGRAM_IS_LOGGED", false);
+            Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
+            logoutInstagram.setVisible(false);
+        }
     }
 
     @Override
