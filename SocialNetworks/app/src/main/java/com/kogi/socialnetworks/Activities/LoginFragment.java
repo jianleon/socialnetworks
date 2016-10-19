@@ -15,6 +15,7 @@ import com.instagram.instagramapi.objects.IGSession;
 import com.instagram.instagramapi.utils.InstagramKitLoginScope;
 import com.instagram.instagramapi.widgets.InstagramLoginButton;
 import com.kogi.socialnetworks.R;
+import com.kogi.socialnetworks.Utils.Configuration;
 import com.kogi.socialnetworks.Utils.Helpers;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
@@ -63,6 +64,8 @@ public class LoginFragment extends Fragment {
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                Log.e("SOME", result.data.getUserId() + "<--");
+                Configuration.user_id = result.data.getUserId();
                 Helpers.setStringPreference(getActivity(), "TWITTER_TOKEN", result.data.getAuthToken().secret);
                 Helpers.setBooleanPreference(getActivity(), "TWITTER_IS_LOGUED", true);
                 com.kogi.socialnetworks.Utils.Configuration.loadView = "twitter";
