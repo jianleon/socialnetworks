@@ -3,6 +3,7 @@
     <string name="company">Kogi Mobile</string>
     <string name="description">Technical test</string>
 
+    <string name="label_start">Comenzar</string>
     <string name="label_twitter">Twitter</string>
     <string name="label_instagram">Instagram</string>
     <string name="label_pick_one">Pick one&#8230;</string>
