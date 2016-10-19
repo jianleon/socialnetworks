@@ -12,12 +12,15 @@ import android.widget.TextView;
 import com.instagram.instagramapi.engine.InstagramEngine;
 import com.instagram.instagramapi.exceptions.InstagramException;
 import com.instagram.instagramapi.interfaces.InstagramAPIResponseCallback;
+import com.instagram.instagramapi.objects.IGMedia;
 import com.instagram.instagramapi.objects.IGPagInfo;
 import com.instagram.instagramapi.objects.IGUser;
 import com.kogi.socialnetworks.R;
 import com.kogi.socialnetworks.Utils.Helpers;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -26,8 +29,8 @@ import static android.app.Activity.RESULT_OK;
  */
 public class InstagramFragment extends Fragment {
 
+    public static final String TAG = InstagramFragment.class.getSimpleName();
     ImageView imgProfilePhoto;
-
     TextView txtSignOut;
     TextView txtFullName;
     TextView txtMediaCount;
@@ -59,11 +62,15 @@ public class InstagramFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 InstagramEngine.getInstance(getActivity()).logout(getActivity(), RESULT_OK);
+                Helpers.setBooleanPreference(getActivity(), "INSTAGRAM_IS_LOGUED", false);
                 Helpers.replaceFragment(getActivity(), R.id.content_main, new LoginFragment());
             }
         });
     }
 
+    /**
+     * Callback que recibe la información del usuario que se ha logueado
+     */
     InstagramAPIResponseCallback<IGUser> instagramUserResponseCallback = new InstagramAPIResponseCallback<IGUser>() {
         @Override
         public void onResponse(IGUser responseObject, IGPagInfo pageInfo) {
@@ -72,7 +79,19 @@ public class InstagramFragment extends Fragment {
 
         @Override
         public void onFailure(InstagramException exception) {
-            Log.v("SampleActivity", "Exception:" + exception.getMessage());
+            Log.v(TAG, "Exception:" + exception.getMessage());
+        }
+    };
+
+    InstagramAPIResponseCallback<ArrayList<IGMedia>> instagramMediaResponseCallback = new InstagramAPIResponseCallback<ArrayList<IGMedia>>() {
+        @Override
+        public void onResponse(ArrayList<IGMedia> responseObject, IGPagInfo pageInfo) {
+            Log.e(TAG, "Id: " + responseObject.size());
+        }
+
+        @Override
+        public void onFailure(InstagramException exception) {
+            Log.e(TAG, "Exception: " + exception.getMessage());
         }
     };
 
@@ -95,6 +114,8 @@ public class InstagramFragment extends Fragment {
         txtMediaCount.setText(String.format("%s Media", info.getMediaCount()));
         txtFollowersCount.setText(String.format("%s Followers", info.getFollowedByCount()));
         txtFollowingCount.setText(String.format("%s Following", info.getFollowsCount()));
+
+        InstagramEngine.getInstance(getActivity()).getUserLikedMedia(instagramMediaResponseCallback);
     }
 
 }

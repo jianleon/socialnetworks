@@ -4,11 +4,11 @@
     <item android:title="Pick one...">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_twitter"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Twitter"/>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_instagram"
                 android:icon="@drawable/ic_camera_alt_black_24dp"
                 android:title="Instagram"/>
         </menu>

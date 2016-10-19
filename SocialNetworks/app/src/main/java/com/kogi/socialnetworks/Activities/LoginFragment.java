@@ -14,7 +14,7 @@ import com.instagram.instagramapi.objects.IGSession;
 import com.instagram.instagramapi.utils.InstagramKitLoginScope;
 import com.instagram.instagramapi.widgets.InstagramLoginButton;
 import com.kogi.socialnetworks.R;
-import com.kogi.socialnetworks.Utils.BaseApplication;
+import com.kogi.socialnetworks.Utils.Helpers;
 
 /**
  * Clase encargada del inicio de sesión de Twitter e Instagram
@@ -36,7 +36,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        String[] scopes = {InstagramKitLoginScope.BASIC, InstagramKitLoginScope.COMMENTS};
+        String[] scopes = {InstagramKitLoginScope.BASIC, InstagramKitLoginScope.PUBLIC_ACCESS};
 
         InstagramLoginButton instagramLoginButton = (InstagramLoginButton) getActivity().findViewById(R.id.instagramLoginButton);
         instagramLoginButton.setInstagramLoginCallback(instagramLoginCallbackListener);
@@ -49,8 +49,8 @@ public class LoginFragment extends Fragment {
     InstagramLoginCallbackListener instagramLoginCallbackListener = new InstagramLoginCallbackListener() {
         @Override
         public void onSuccess(IGSession session) {
-            BaseApplication.INSTAGRAM_USER_TOKEN = session.getAccessToken();
-            BaseApplication.INSTAGRAM_USER_LOGGUED = true;
+            Helpers.setBooleanPreference(getActivity(), "INSTAGRAM_IS_LOGUED", true);
+            Helpers.setStringPreference(getActivity(), "INSTAGRAM_ACCESS_TOKEN", session.getAccessToken());
             startActivity(new Intent(getActivity(), MainActivity.class));
             getActivity().finish();
         }

@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.kogi.socialnetworks.R;
-import com.kogi.socialnetworks.Utils.BaseApplication;
 import com.kogi.socialnetworks.Utils.Helpers;
 
 public class MainActivity extends AppCompatActivity
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (BaseApplication.INSTAGRAM_USER_LOGGUED)
+        if (Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGUED"))
             Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
         else
             Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
@@ -55,9 +54,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_share) {
+        if (id == R.id.nav_twitter) {
             Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_instagram) {
             Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
         }
 
