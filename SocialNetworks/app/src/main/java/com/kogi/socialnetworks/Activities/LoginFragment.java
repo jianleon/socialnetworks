@@ -23,7 +23,6 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-import com.twitter.sdk.android.core.models.Configuration;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -86,6 +85,7 @@ public class LoginFragment extends Fragment {
         public void onSuccess(IGSession session) {
             Helpers.setBooleanPreference(getActivity(), "INSTAGRAM_IS_LOGUED", true);
             Helpers.setStringPreference(getActivity(), "INSTAGRAM_ACCESS_TOKEN", session.getAccessToken());
+            com.kogi.socialnetworks.Utils.Configuration.loadView = "instagram";
             startActivity(new Intent(getActivity(), MainActivity.class));
             getActivity().finish();
         }

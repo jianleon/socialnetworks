@@ -34,12 +34,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (Configuration.loadView.equals("instagram")) {
-            if (Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGUED"))
-                Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
-        } else if (Configuration.loadView.equals("twitter")) {
-            if (Helpers.getBooleanPreference(getApplicationContext(),"TWITTER_IS_LOGUED"))
-                Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
+        if (Configuration.loadView.equals("instagram") && Helpers.getBooleanPreference(getApplicationContext(),"INSTAGRAM_IS_LOGUED")) {
+            Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
+        } else if (Configuration.loadView.equals("twitter") && Helpers.getBooleanPreference(getApplicationContext(),"TWITTER_IS_LOGUED")) {
+            Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
         } else
             Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
     }
@@ -62,9 +60,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_twitter) {
-            Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
+            if (Helpers.getBooleanPreference(getApplicationContext(), "TWITTER_IS_LOGUED"))
+                Helpers.replaceFragment(this, R.id.content_main, new TwitterFragment());
+            else
+                Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
         } else if (id == R.id.nav_instagram) {
-            Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
+            if (Helpers.getBooleanPreference(getApplicationContext(), "INSTAGRAM_IS_LOGUED"))
+                Helpers.replaceFragment(this, R.id.content_main, new InstagramFragment());
+            else
+                Helpers.replaceFragment(this, R.id.content_main, new LoginFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
